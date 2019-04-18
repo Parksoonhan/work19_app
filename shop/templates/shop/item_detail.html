@@ -1,0 +1,70 @@
+{% extends './layout.html' %}
+
+{% block content %}
+{# <a href="/shop/">상품 목록 보기</a> #}
+<a href="{% url 'shop:item_list' %}">상품 목록 보기</a>
+
+    <form>
+    <fieldset>
+    <table>
+        <thead>
+            <th>필드</th><th>내용</th>
+        </thead>
+        <tbody>
+        <tr>
+            <td width="10%">id:</td><td><input type="text" value={{ item.id }}></td>
+        </tr>
+        <tr>
+            <td>이름:</td><td><input type="text" value="{{ item.name }}"></td>
+        </tr>
+        <tr>
+            <td>설명:</td><td><input type="text" value="{{ item.desc }}" style="width:300px;"></td>
+        </tr>
+        <tr>
+            <td>사진:</td><td><input type="image" img src="{{ item.photo.url }}" value="{{ item.photo }}" style="width:300px;"></td>
+        </tr>
+        <tr>
+            <td>게시 일시:</td><td><input type="text" value="{{ item.created_at }}"></td>
+        </tr>
+        <tr>
+            <td>수정 일시:</td><td><input type="text" value="{{ item.updated }}"></td>
+        </tr>
+        <tr>
+            <td>태그 집합:</td><td><input type="text" value="{{ item.tagged }}"></td>
+        </tr>
+        </tbody>
+    </table>
+    </fieldset>
+    </form> <br/>
+
+    {# https://python.bakyeono.net/chapter-7-2.html #}
+        `for key, value in my_tag.items`:
+        {% for key, value in my_tag.items %}
+            {% if value > 0 %}
+                <input type="checkbox" name={{ key }} checked>
+            {% else %}
+                <input type="checkbox" name={{ key }}>
+            {% endif %}
+            <label for={{ key }}> {{ key }} </label>
+        {% endfor %} <br/>
+        <hr>
+<table>
+        <thead>
+            <th>id</th>
+            <th>댓글</th>
+            <th>작성 일시</th>
+            <th>수정 일시</th>
+        </thead>
+        <tbody>
+        {% for c in item.reviews.all %}
+            <tr>
+                <td>{{ c.id }}</td>
+                <td>{{ c.message }}</td>
+                <td>{{ c.created_at }}</td>
+                <td>{{ c.updated }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock content %}
